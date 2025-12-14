@@ -32,7 +32,7 @@ const oswald = Oswald({
   weight: ["400", "500", "600", "700"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://adbeezs.co';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://adbeezs.site';
 const siteName = 'Adbeezs';
 const siteDescription = 'The new way of advertising. We transform static spaces into storytelling platforms and everyday moments into marketing opportunities.';
 

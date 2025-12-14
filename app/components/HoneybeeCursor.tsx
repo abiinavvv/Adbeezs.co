@@ -1,13 +1,14 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import Lottie from 'lottie-react';
+import { useEffect, useState, useRef } from 'react';
+import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 
 export default function HoneybeeCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [animationData, setAnimationData] = useState<any>(null);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -62,6 +63,13 @@ export default function HoneybeeCursor() {
     };
   }, [cursorX, cursorY]);
 
+  // Update animation speed based on hover state
+  useEffect(() => {
+    if (lottieRef.current) {
+      lottieRef.current.setSpeed(isHovering ? 1.5 : 1);
+    }
+  }, [isHovering]);
+
   // Transform values for rotation based on movement
   const rotateX = useTransform(
     cursorYSpring,
@@ -95,11 +103,11 @@ export default function HoneybeeCursor() {
         {animationData ? (
           <div className="w-16 h-16 -translate-x-1/2 -translate-y-1/2">
             <Lottie
+              lottieRef={lottieRef}
               animationData={animationData}
               loop={true}
               autoplay={true}
               style={{ width: '100%', height: '100%' }}
-              speed={isHovering ? 1.5 : 1}
             />
           </div>
         ) : (
